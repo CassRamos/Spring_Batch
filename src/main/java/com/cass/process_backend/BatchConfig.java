@@ -43,11 +43,11 @@ public class BatchConfig {
 
     @Bean
     Step step(
-            ItemReader<TransacaoCNAB> reader,
-            ItemProcessor<TransacaoCNAB, Transacao> processor,
-            ItemWriter<Transacao> writer) {
+            ItemReader<CNABTransaction> reader,
+            ItemProcessor<CNABTransaction, Transaction> processor,
+            ItemWriter<Transaction> writer) {
         return new StepBuilder("step", jobRepository)
-                .<TransacaoCNAB, Transacao>chunk(1000, transactionManager)
+                .<CNABTransaction, Transaction>chunk(1000, transactionManager)
                 .reader(reader)
                 .processor(processor)
                 .writer(writer)
@@ -55,8 +55,8 @@ public class BatchConfig {
     }
 
     @Bean
-    FlatFileItemReader<TransacaoCNAB> reader() {
-        return new FlatFileItemReaderBuilder<TransacaoCNAB>()
+    FlatFileItemReader<CNABTransaction> reader() {
+        return new FlatFileItemReaderBuilder<CNABTransaction>()
                 .name("reader")
                 .resource(new FileSystemResource("files/CNAB.txt"))
                 .fixedLength()
@@ -66,37 +66,37 @@ public class BatchConfig {
                         new Range(31, 42), new Range(43, 48),
                         new Range(49, 62), new Range(63, 80)
                 )
-                .names("tipo", "data", "valor", "cpf",
-                        "cartao", "hora", "donoDaLoja", "nomeDaLoja")
-                .targetType(TransacaoCNAB.class)
+                .names("type", "date", "amount", "cpf",
+                        "card", "hour", "shopOwner", "shopName")
+                .targetType(CNABTransaction.class)
                 .build();
     }
 
     @Bean
-    ItemProcessor<TransacaoCNAB, Transacao> processor() {
+    ItemProcessor<CNABTransaction, Transaction> processor() {
         return item -> {
-            return new Transacao(
-                    null, item.tipo(), null, null, item.cpf(),
-                    item.cartao(), null,
-                    item.donoDaLoja().trim(), item.nomeDaLoja().trim())
+            return new Transaction(
+                    null, item.type(), null, null, item.cpf(),
+                    item.card(), null,
+                    item.shopOwner().trim(), item.shopName().trim())
                     .withValor(
-                            item.valor().divide(BigDecimal.valueOf(100)))
-                    .withData(item.data())
-                    .withHora(item.hora());
+                            item.amount().divide(BigDecimal.valueOf(100)))
+                    .withData(item.date())
+                    .withHora(item.hour());
         };
     }
 
     @Bean
-    JdbcBatchItemWriter<Transacao> writer(DataSource dataSource) {
-        return new JdbcBatchItemWriterBuilder<Transacao>()
+    JdbcBatchItemWriter<Transaction> writer(DataSource dataSource) {
+        return new JdbcBatchItemWriterBuilder<Transaction>()
                 .dataSource(dataSource)
                 .sql("""
-                            INSERT INTO transacao (
-                            tipo, data, valor, cpf,
-                            cartao, hora, dono_loja, nome_loja
+                            INSERT INTO `transaction` (
+                            `type`, `date`, amount, cpf,
+                            card, `hour`, shop_owner, shop_name
                             ) VALUES (
-                            :tipo, :data, :valor, :cpf, 
-                            :cartao, :hora, :donoDaLoja, :nomeDaLoja
+                            :type, :date, :amount, :cpf, 
+                            :card, :hour, :shopOwner, :shopName
                             )
                         """)
                 .beanMapped()
