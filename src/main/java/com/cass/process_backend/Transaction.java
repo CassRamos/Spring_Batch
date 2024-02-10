@@ -20,26 +20,26 @@ public record Transaction(
     //wither pattern
     public Transaction withValor(BigDecimal amount) {
         return new Transaction(
-                this.id(), this.type(), this.date(),
+                id(), type(), date(),
                 amount,
-                this.cpf(), this.card(), this.hour(), this.shopOwner(), this.shopName());
+                cpf(), card(), hour(), shopOwner(), shopName());
     }
 
     public Transaction withData(String date) throws ParseException {
         var dateFormat = new SimpleDateFormat("yyyyMMdd");
         var dateP = dateFormat.parse(date);
 
-        return new Transaction(this.id(), this.type(),
+        return new Transaction(id(), type(),
                 new Date(dateP.getTime()),
-                this.amount(), this.cpf(), this.card(), this.hour(), this.shopOwner(), this.shopName());
+                amount(), cpf(), card(), hour(), shopOwner(), shopName());
     }
 
     public Transaction withHora(String hour) throws ParseException {
         var hourFormat = new SimpleDateFormat("HHmmss");
         var hourP = hourFormat.parse(hour);
 
-        return new Transaction(this.id(), this.type(), this.date(), this.amount(), this.cpf(), this.card(),
+        return new Transaction(id(), type(), date(), amount(), cpf(), card(),
                 new Time(hourP.getTime()),
-                this.shopOwner(), this.shopName());
+                shopOwner(), shopName());
     }
 }
