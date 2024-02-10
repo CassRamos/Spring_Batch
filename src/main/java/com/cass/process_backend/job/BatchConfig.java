@@ -1,5 +1,7 @@
-package com.cass.process_backend;
+package com.cass.process_backend.job;
 
+import com.cass.process_backend.domain.CNABTransaction;
+import com.cass.process_backend.domain.Transaction;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.job.builder.JobBuilder;
