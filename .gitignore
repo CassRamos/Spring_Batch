@@ -33,3 +33,5 @@ build/
 .vscode/
 /data/
 /tmp/CNAB.txt
+/tmp/
+/files/
