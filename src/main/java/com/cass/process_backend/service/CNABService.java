@@ -1,4 +1,4 @@
-package com.cass.process_backend.domain;
+package com.cass.process_backend.service;
 
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobParametersBuilder;
@@ -40,7 +40,8 @@ public class CNABService {
                         true)
                 .addJobParameter("cnabFile",
                         "file:" + targetLocation.toString(),
-                        String.class)
+                        String.class,
+                        false)
                 .toJobParameters();
 
         jobLauncher.run(job, jobParameters);

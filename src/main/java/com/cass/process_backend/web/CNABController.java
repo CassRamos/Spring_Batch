@@ -1,6 +1,6 @@
 package com.cass.process_backend.web;
 
-import com.cass.process_backend.domain.CNABService;
+import com.cass.process_backend.service.CNABService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;

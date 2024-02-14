@@ -1,4 +1,7 @@
-package com.cass.process_backend.domain;
+package com.cass.process_backend.entity;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Column;
 
 import java.math.BigDecimal;
 import java.sql.Time;
@@ -7,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.sql.Date;
 
 public record Transaction(
+        @Id
         Long id,
         Integer type,
         Date date,
@@ -14,7 +18,9 @@ public record Transaction(
         Long cpf,
         String card,
         Time hour,
+        @Column("shop_owner")
         String shopOwner,
+        @Column("shop_name")
         String shopName
 ) {
     //wither pattern

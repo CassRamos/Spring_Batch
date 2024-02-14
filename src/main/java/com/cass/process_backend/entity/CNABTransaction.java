@@ -1,4 +1,4 @@
-package com.cass.process_backend.domain;
+package com.cass.process_backend.entity;
 
 import java.math.BigDecimal;
 
