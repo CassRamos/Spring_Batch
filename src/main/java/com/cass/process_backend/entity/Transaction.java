@@ -18,9 +18,9 @@ public record Transaction(
         Long cpf,
         String card,
         Time hour,
-        @Column("shop_owner")
+        @Column("SHOP_OWNER")
         String shopOwner,
-        @Column("shop_name")
+        @Column("SHOP_NAME")
         String shopName
 ) {
     //wither pattern
