@@ -1,6 +1,7 @@
 package com.cass.process_backend.web;
 
 import com.cass.process_backend.entity.Transaction;
+import com.cass.process_backend.entity.TransactionReport;
 import com.cass.process_backend.service.TransactionService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +19,7 @@ public class TransactionController {
     }
 
     @GetMapping
-    List<Transaction> listAll() {
+    List<TransactionReport> listAll() {
         return transactionService.listTransactionsTotalByShopName();
     }
 
