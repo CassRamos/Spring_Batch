@@ -24,14 +24,14 @@ public record Transaction(
         String shopName
 ) {
     //wither pattern
-    public Transaction withValor(BigDecimal amount) {
+    public Transaction withAmount(BigDecimal amount) {
         return new Transaction(
                 id(), type(), date(),
                 amount,
                 cpf(), card(), hour(), shopOwner(), shopName());
     }
 
-    public Transaction withData(String date) throws ParseException {
+    public Transaction withDate(String date) throws ParseException {
         var dateFormat = new SimpleDateFormat("yyyyMMdd");
         var dateP = dateFormat.parse(date);
 
@@ -40,7 +40,7 @@ public record Transaction(
                 amount(), cpf(), card(), hour(), shopOwner(), shopName());
     }
 
-    public Transaction withHora(String hour) throws ParseException {
+    public Transaction withHour(String hour) throws ParseException {
         var hourFormat = new SimpleDateFormat("HHmmss");
         var hourP = hourFormat.parse(hour);
 

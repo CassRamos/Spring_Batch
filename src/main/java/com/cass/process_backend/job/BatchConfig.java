@@ -94,8 +94,8 @@ public class BatchConfig {
                     null,
                     item.shopOwner().trim(),
                     item.shopName().trim())
-                    .withData(item.date())
-                    .withHora(item.hour());
+                    .withDate(item.date())
+                    .withHour(item.hour());
         };
     }
 
