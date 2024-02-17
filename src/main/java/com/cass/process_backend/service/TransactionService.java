@@ -21,19 +21,17 @@ public class TransactionService {
 
     public List<TransactionReport> listTransactionsTotalByShopName() {
         var transactions = repository.findAllByOrderByShopNameAscIdDesc();
-
         var reportMap = new LinkedHashMap<String, TransactionReport>();
 
         transactions.forEach(transaction -> {
             String shopName = transaction.shopName();
-            var transactionType = TransactionType.findByType(transaction.type());
-            BigDecimal amount = transaction.amount().multiply(transactionType.getSign());
+            BigDecimal amount = transaction.amount();
 
             reportMap.compute(shopName, (key, existingReport) -> {
                 var report = (existingReport != null) ? existingReport :
                         new TransactionReport(key, BigDecimal.ZERO, new ArrayList<>());
 
-                return report.addTotal(amount).addTransaction(transaction.withAmount(amount));
+                return report.addTotal(amount).addTransaction(transaction);
             });
         });
         return new ArrayList<>(reportMap.values());

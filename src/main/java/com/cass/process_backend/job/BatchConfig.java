@@ -2,6 +2,7 @@ package com.cass.process_backend.job;
 
 import com.cass.process_backend.entity.CNABTransaction;
 import com.cass.process_backend.entity.Transaction;
+import com.cass.process_backend.entity.TransactionType;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.StepScope;
@@ -84,11 +85,15 @@ public class BatchConfig {
     @Bean
     ItemProcessor<CNABTransaction, Transaction> processor() {
         return item -> {
+            var transactionType = TransactionType.findByType(item.type());
+            var formattedAmount = item.amount()
+                    .divide(new BigDecimal(100))
+                    .multiply(transactionType.getSign());
             return new Transaction(
                     null,
                     item.type(),
                     null,
-                    item.amount().divide(BigDecimal.valueOf(100)),
+                    formattedAmount,
                     item.cpf(),
                     item.card(),
                     null,
