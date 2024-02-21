@@ -1,10 +1,7 @@
 package com.cass.process_backend.web;
 
 import com.cass.process_backend.service.CNABService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
@@ -18,6 +15,7 @@ public class CNABController {
     }
 
     @PostMapping("upload")
+    @CrossOrigin(origins = {"http://localhost:9090"})
     public String upload(@RequestParam("file") MultipartFile file) throws Exception {
         cnabService.uploadCnabFile(file);
         return "Process initialized!";

@@ -3,6 +3,7 @@ package com.cass.process_backend.web;
 import com.cass.process_backend.entity.Transaction;
 import com.cass.process_backend.entity.TransactionReport;
 import com.cass.process_backend.service.TransactionService;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,6 +20,7 @@ public class TransactionController {
     }
 
     @GetMapping
+    @CrossOrigin(origins = {"http://localhost:9090"})
     List<TransactionReport> listAll() {
         return transactionService.listTransactionsTotalByShopName();
     }
