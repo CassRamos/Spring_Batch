@@ -18,9 +18,10 @@ public record Transaction(
         Long cpf,
         String card,
         Time hour,
-        @Column("SHOP_OWNER")
+        //postgreSQL don't restrict to uppercase column names
+        @Column("shop_owner")
         String shopOwner,
-        @Column("SHOP_NAME")
+        @Column("shop_owner")
         String shopName
 ) {
     //wither pattern
